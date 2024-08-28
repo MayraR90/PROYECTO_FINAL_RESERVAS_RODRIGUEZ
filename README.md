@@ -5,10 +5,15 @@
 ## **PROYECTO FINAL**
 
 **CURSO:** *SQL*
+
 **ALUMNA**: *RODRIGUEZ, MAYRA ALEJANDRA*
+
 **COMISIÓN:** *57190* 
+
 **TUTOR:** *ARIEL ANNONE*
+
 **DOCENTE:** *ANDERSON MICHEL TORRES*
+
 ---
 **CONSIGNAS**
 - *Descripción de la temática de la base de datos.*
@@ -25,7 +30,10 @@
 ***3. Registro de reservas:** Necesitamos un sistema que pueda registrar de manera detallada cada reserva realizada.*
 ## DESCRIPCIÓN
 *Necesitamos una base de la base para nuestro club que permita registrar las reservas que realizan los socios para las actividades que brindamos  todos los días.*
+
+
 ## TABLAS
+
 **1. SOCIOS**
 - *Almacena información sobre los socios que realizan reservas.*
 - ***Atributos:** ID_SOCIO (PK), NOMBRE, APELLIDO, DNI, TELÉFONO, EMAIL Y FECHA_ALTA.*
@@ -38,10 +46,10 @@
 **4. UBICACIÓN**
 - *Contiene información de las sedes que tenemos sobre las cuáles se realizarán las reservas de las actividades.*
 - ***Atributos:** ID_SEDE (PK), DIRECCIÓN, TELÉFONO y ID_DUEÑO (FK).*
-
-- **5. DUEÑO**
+**5. DUEÑO**
 - *Contiene información de los dueños de cada una de nuestras sedes.*
 - ***Atributos:** ID_DUEÑO (PK), NOMBRE, APELLIDO, TELÉFONO.*
 **6. PROFESORES.**
 - *Contiene información de los profesores que realizan las actividades en nuestras sedes.*
 - ***Atributos:** ID_PROFESOR (PK), NOMBRES, APELLIDO, DNI, TELÉFONO, ALTA, ID_ACTIVIDAD (FK), ID_SEDE (FK).*
+ 
