@@ -120,9 +120,10 @@ SE USARÁ LA TABLA “RESERVAS” PARA BRINDAR ESTA INFORMACIÓN.
 
 **TRIGGERS.**
 
--- TRIGGERS--
--- ESTOS TRIGGERS NOS PERMITEN AUTOMATIZAR ALGUNAS TAREAS EN LA BASE DE DATOS COMO LA PREVENCIÓN DE ERRORES Y DUPLICADO DE RESERVAS
--- EJEMPLO N° 1: Trigger para evitar duplicados de DNI entre tablas
+-- ESTOS TRIGGERS NOS PERMITEN AUTOMATIZAR ALGUNAS TAREAS EN LA BASE DE DATOS COMO LA PREVENCIÓN DE ERRORES Y DUPLICADO DE RESERVAS.
+
+
+-- EJEMPLO N° 1: ESTE TRIGGER NOS AYUDA A EVITAR DUPLICADOS DE DNI ENTRE TABLAS. SE ACTIVA ANTES DE INSERTAR UN NUEVO REGISTRO EN LA TABLA PROFESORES Y VERIFICA QUE EL DNI NO ESTÉ DUPLICADO EN LA TABLA SOCIOS.
 
 DROP TRIGGER IF EXISTS VERIFICAR_DNI_UNICO;
 
@@ -139,8 +140,38 @@ END //
 
 DELIMITER ;
 
--- Se usará a modo de ejemplo la siguiente inserción de datos
+-- Se usará a modo de ejemplo la siguiente inserción de datos para verificar el trigger.Cuya inserción no será exitosa debido a que el dni pertenece a un socio. 
 
 INSERT INTO PROFESORES (NOMBRES, APELLIDO, DNI, TELEFONO, ALTA, ID_ACTIVIDAD, ID_SEDE)
+
 VALUES ('Macarena', 'Gutierrez', 12345601, 399349960, '2023-01-01 10:00:00', 1, 1);
+
+-- EJEMPLO N° 2: EVITAR LA DUPLICACIÓN DE CORREOS ELECTRÓNICOS EN LA TABLA SOCIOS.ESTE TRIGGER SE ASEGURA DE QUE CADA CORREO ELECTRÓNICO EN LA TABLA SEA ÚNICO,ES DECIR, QUE NO HAYA DOS SOCIOS CON EL MISMO CORREO REGISTRADO. 
+
+
+DROP TRIGGER IF EXISTS evitar_duplicado_mail;
+
+DELIMITER //
+
+CREATE TRIGGER evitar_duplicado_mail
+BEFORE INSERT ON SOCIOS
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT 1 FROM SOCIOS WHERE MAIL = NEW.MAIL) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El correo electrónico ya está registrado en otro socio';
+    END IF;
+END //
+
+DELIMITER ;
+
+-- Se usará a modo de ejemplo la siguiente inserción de datos para verificar el trigger; tomando de ejemplo el mail de la socia Valeria Moreno, cuyo mail es 'valeria19@example.com'.
+
+INSERT INTO SOCIOS (NOMBRE, APELLIDO, DNI, TELEFONO, MAIL, FECHA_ALTA)
+
+VALUES ('Valeria', 'Mendoza', 87654991, 22994455, 'valeria19@example.com', '2024-09-10 09:00:00');
+
+--  El mismo nos dará el error: 'El correo electrónico ya está registrado en otro socio'
+
+
+
 
