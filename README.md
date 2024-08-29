@@ -154,12 +154,16 @@ DROP TRIGGER IF EXISTS evitar_duplicado_mail;
 DELIMITER //
 
 CREATE TRIGGER evitar_duplicado_mail
+
 BEFORE INSERT ON SOCIOS
+
 FOR EACH ROW
+
 BEGIN
     IF EXISTS (SELECT 1 FROM SOCIOS WHERE MAIL = NEW.MAIL) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El correo electrónico ya está registrado en otro socio';
     END IF;
+    
 END //
 
 DELIMITER ;
