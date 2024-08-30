@@ -180,7 +180,7 @@ VALUES ('Valeria', 'Mendoza', 87654991, 22994455, 'valeria19@example.com', '2024
 **ROLES Y USUARIOS.**
 
 ROLES:
-1. Rol adminitrativo.
+1. Rol administrativo.
 
 Este rol tiene control total sobre todas las tablas y puede realizar cualquier operación, incluyendo la creación, modificación, y eliminación de tablas, así como la administración de usuarios y roles.
 
@@ -194,7 +194,7 @@ Usuario: reservas_manager
 
 3. Rol de gestor de sedes.
    
-Adminitra la información relacionada con las sedes y los dueños. Puede agregar nuevas sedes y dueños, así como modificar y eliminar los registros existentes.
+Administra la información relacionada con las sedes y los dueños. Puede agregar nuevas sedes y dueños, así como modificar y eliminar los registros existentes.
 
 Usuario: sedes_manager
 
@@ -211,3 +211,53 @@ Este rol tiene permisos limitados para actualizar solo la información de los so
 Usuario: servicio_socio
 
 
+Una vez creados los roles, usarios y asignaciones, se activan los roles y se actualizan los privilegios con los siguientes respectivos comandos:
+
+COMPLETAR ESTA PARTE CON LA ACTIVACIÓN Y LOS CÓGIDOS EN SQL.
+
+
+**LENGUAJE DE CONTROL DE TRANSACCIONES (TCL):APLICADO A STORE PROCEDURES.**
+
+EJEMPLO N° 1:insertar_socio.
+
+DESCRIPCIÓN: ASEGURA QUE LA INSERCIÓN DE UN NUEVO SOCIO EN LA TABLA SOCIOS SE REALICE CORRECTAMENTE Y QUE,EN CASO DE ERROR, LA TRANSACCIÓN SE REVIERTA PARA MANTENER LA INTEGRIDAD DE LOS DATOS.
+
+START TRANSACTION;
+
+BEGIN
+    -- Llamada al procedimiento almacenado para insertar un nuevo socio
+    CALL insertar_socio('Julia', 'Martínez', 45000994, 1234897893, 'julia.martinez8@example.com', '2024-09-15 10:00:00');
+    
+    -- Supongamos que quieres realizar otra operación que depende de esta inserción
+    -- (por ejemplo, insertar una reserva, si existiera una función de reserva).
+
+    -- Si todo se ejecuta correctamente, confirmamos la transacción
+    COMMIT;
+
+EXCEPTION
+    -- Si ocurre algún error, revertimos la transacción
+    ROLLBACK;
+END;
+
+
+EJEMPLO N°2:actualizar_socio
+
+DESCRIPCIÓN:ASEGURA QUE LA ACTUALIZACIÓN DE LA INFORMACIÓN DE UN SOCIO EN LA TABLA SOCIOS SE REALICE CORRECTAMENTE,Y EN CASO DE ERROR, LA TRANSACCIÓN SE REVIERTA.
+
+BUSCAR UN SOCIO DE EJEMPLO.
+
+START TRANSACTION;
+
+BEGIN
+    -- Llamada al procedimiento almacenado para actualizar la información de un socio
+    CALL actualizar_socio(1, 'Pedro', 'Ramírez', 12345601, 23456701, 'pedro23@example.com', '2023-01-01 10:00:00');
+    
+    -- Si todo se ejecuta correctamente, confirmamos la transacción
+    COMMIT;
+
+EXCEPTION
+    -- Si ocurre algún error, revertimos la transacción
+    ROLLBACK;
+END;
+
+**BACKUP**
