@@ -15,6 +15,8 @@
 
 **DOCENTE:** *ANDERSON MICHEL TORRES*
 
+![image](https://github.com/user-attachments/assets/5254fe86-30d4-4e12-be11-f260f96ec6e6)
+
 ---
 ## PROBLEMA
 *Se está desarrollando un sistema de gestión de reservas de las actividades para un club con varias sedes, que permita poder  manejar todas las operaciones relacionadas con las mismas.*
