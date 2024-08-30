@@ -15,9 +15,6 @@
 
 **DOCENTE:** *ANDERSON MICHEL TORRES*
 
-![image](https://github.com/user-attachments/assets/5254fe86-30d4-4e12-be11-f260f96ec6e6)
-
-
 ---
 ## PROBLEMA
 *Se está desarrollando un sistema de gestión de reservas de las actividades para un club con varias sedes, que permita poder  manejar todas las operaciones relacionadas con las mismas.*
@@ -225,7 +222,7 @@ Una vez creados los roles, usarios y asignaciones, se activan los roles y se act
 
 Se  activarán los diferentes roles:
 
-SET ROLE ALL;
+    --SET ROLE ALL;
 
 
 Y luego, se actualizarán los privilegios en el servidor
