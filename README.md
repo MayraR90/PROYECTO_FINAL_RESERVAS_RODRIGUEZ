@@ -243,6 +243,9 @@ GRANT SELECT ON PROYECTO_RESERVAS.ACTIVIDADES TO 'socio_role';
 
 ASIGNACIÓN DE ROLES A USUARIOS.
 
+![image](https://github.com/user-attachments/assets/4553e4bc-bbee-4a02-bbbd-2eb21c2a90b9)
+
+
 GRANT 'admin_role' TO 'admin_user'@'localhost';
 GRANT 'gestor_reservas_role' TO 'reservas_manager'@'localhost';
 GRANT 'gestor_sedes_role' TO 'sedes_manager'@'localhost';
@@ -254,6 +257,9 @@ GRANT 'socio_role' TO 'servicio_socio'@'localhost';
 Una vez creados los roles, usarios y asignaciones, se activan los roles y se actualizan los privilegios con los siguientes comandos:
 
 Se  activarán los diferentes roles:
+
+![image](https://github.com/user-attachments/assets/b359cc9d-04f8-4a93-a2b3-ced3a0a7a26a)
+
 
 SET ROLE 'admin_role';
 SET ROLE 'gestor_reservas_role';
