@@ -16,8 +16,6 @@
 **DOCENTE:** *ANDERSON MICHEL TORRES*
 
 ---
-
----
 ## PROBLEMA
 *Se está desarrollando un sistema de gestión de reservas de las actividades para un club con varias sedes, que permita poder  manejar todas las operaciones relacionadas con las mismas.*
 
@@ -128,7 +126,7 @@ EJEMPLO N° 1: ESTE TRIGGER NOS AYUDA A EVITAR DUPLICADOS DE DNI ENTRE TABLAS. S
 ![image](https://github.com/user-attachments/assets/48f25da3-cebb-4152-96c6-e7fa5da84329)
 
 
-SEUSARÁ A MODO DE EJEMPLO LA SIGUIENTE INSERCIÓN DE DATOS PARA VERIFICAR EL TRIGGER. CUYA INSERCIÓN NO SERÁ EXITOSA DEBIDO A QUE EL DNI PERTENECE A UN SOCIO.
+SE USARÁ A MODO DE EJEMPLO LA SIGUIENTE INSERCIÓN DE DATOS PARA VERIFICAR EL TRIGGER. CUYA INSERCIÓN NO SERÁ EXITOSA DEBIDO A QUE EL DNI PERTENECE A UN SOCIO.
 
 ![image](https://github.com/user-attachments/assets/2370f698-a6a6-41c0-b3dd-932bde4cf205)
 
