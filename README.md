@@ -184,21 +184,11 @@ SE PROCEDE A CREAR LOS USUARIOS:
 
 ![image](https://github.com/user-attachments/assets/92095353-8872-429e-b1a2-b5efa0196a40)
 
-CREATE USER 'admin_user'@'localhost' IDENTIFIED BY 'password123';
-CREATE USER 'reservas_manager'@'localhost' IDENTIFIED BY 'password123';
-CREATE USER 'sedes_manager'@'localhost' IDENTIFIED BY 'password123';
-CREATE USER 'profesores_manager'@'localhost' IDENTIFIED BY 'password123';
-CREATE USER 'servicio_socio'@'localhost' IDENTIFIED BY 'password123';
 
 Y LUEGO,LOS ROLES:
 
 ![image](https://github.com/user-attachments/assets/7172d838-0842-4d4b-8488-90dc5b12de47)
 
-CREATE ROLE 'admin_role';
-CREATE ROLE 'gestor_reservas_role';
-CREATE ROLE 'gestor_sedes_role';
-CREATE ROLE 'gestor_profesores_role';
-CREATE ROLE 'socio_role';
 
 ASIGNACIÓN DE ROLES:
 1. Rol administrativo con permisos completos
@@ -206,51 +196,28 @@ ASIGNACIÓN DE ROLES:
 ![image](https://github.com/user-attachments/assets/9e5cd3be-5a6e-4cb6-b4ad-88b8f69caf19)
 
 
-GRANT ALL PRIVILEGES ON *.* TO 'admin_role';
-
 2. Rol de gestor de reservas
 
 ![image](https://github.com/user-attachments/assets/cf582921-f5a3-44c6-a86c-35c673a0767c)
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON PROYECTO_RESERVAS.RESERVAS TO 'gestor_reservas_role';
-GRANT SELECT, UPDATE ON PROYECTO_RESERVAS.SOCIOS TO 'gestor_reservas_role';
-GRANT SELECT, UPDATE ON PROYECTO_RESERVAS.ACTIVIDADES TO 'gestor_reservas_role';
 
 3. Rol de gestor de sedes
 
 ![image](https://github.com/user-attachments/assets/68a335fb-13f0-4dda-91e8-45e35f3ba6d4)
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON PROYECTO_RESERVAS.SEDE TO 'gestor_sedes_role';
-GRANT SELECT, INSERT, UPDATE, DELETE ON PROYECTO_RESERVAS.DUENO TO 'gestor_sedes_role';
-
 4. Rol de gestor de profesores
 
 ![image](https://github.com/user-attachments/assets/f6c5d70a-777e-4512-acac-bbce8019d094)
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON PROYECTO_RESERVAS.PROFESORES TO 'gestor_profesores_role';
-GRANT SELECT ON PROYECTO_RESERVAS.ACTIVIDADES TO 'gestor_profesores_role';
-GRANT SELECT ON PROYECTO_RESERVAS.SEDE TO 'gestor_profesores_role';
 
 5. Rol de socio con permisos limitados
 
 ![image](https://github.com/user-attachments/assets/024816dd-7633-4c90-9931-7aef3a97e4e3)
-
-
-GRANT SELECT, UPDATE ON PROYECTO_RESERVAS.SOCIOS TO 'socio_role';
-GRANT SELECT ON PROYECTO_RESERVAS.RESERVAS TO 'socio_role';
-GRANT SELECT ON PROYECTO_RESERVAS.ACTIVIDADES TO 'socio_role';
-
 
 ASIGNACIÓN DE ROLES A USUARIOS.
 
 ![image](https://github.com/user-attachments/assets/4553e4bc-bbee-4a02-bbbd-2eb21c2a90b9)
 
 
-GRANT 'admin_role' TO 'admin_user'@'localhost';
-GRANT 'gestor_reservas_role' TO 'reservas_manager'@'localhost';
-GRANT 'gestor_sedes_role' TO 'sedes_manager'@'localhost';
-GRANT 'gestor_profesores_role' TO 'profesores_manager'@'localhost';
-GRANT 'socio_role' TO 'servicio_socio'@'localhost';
 
 
 
@@ -258,14 +225,8 @@ Una vez creados los roles, usarios y asignaciones, se activan los roles y se act
 
 Se  activarán los diferentes roles:
 
-![image](https://github.com/user-attachments/assets/b359cc9d-04f8-4a93-a2b3-ced3a0a7a26a)
+SET ROLE ALL;
 
-
-SET ROLE 'admin_role';
-SET ROLE 'gestor_reservas_role';
-SET ROLE 'gestor_sedes_role';
-SET ROLE 'gestor_profesores_role';
-SET ROLE 'socio_role';
 
 Y luego, se actualizarán los privilegios en el servidor
 FLUSH PRIVILEGES;
