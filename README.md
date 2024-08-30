@@ -181,6 +181,9 @@ Usuario: servicio_socio
 
 
 SE PROCEDE A CREAR LOS USUARIOS:
+
+![image](https://github.com/user-attachments/assets/92095353-8872-429e-b1a2-b5efa0196a40)
+
 CREATE USER 'admin_user'@'localhost' IDENTIFIED BY 'password123';
 CREATE USER 'reservas_manager'@'localhost' IDENTIFIED BY 'password123';
 CREATE USER 'sedes_manager'@'localhost' IDENTIFIED BY 'password123';
@@ -229,7 +232,7 @@ GRANT 'socio_role' TO 'servicio_socio'@'localhost';
 
 
 
-Una vez creados los roles, usarios y asignaciones, se activan los roles y se actualizan los privilegios con los siguientes respectivos comandos:
+Una vez creados los roles, usarios y asignaciones, se activan los roles y se actualizan los privilegios con los siguientes comandos:
 
 Se  activarán los diferentes roles:
 
