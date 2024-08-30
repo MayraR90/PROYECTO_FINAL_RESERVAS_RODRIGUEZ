@@ -177,5 +177,37 @@ VALUES ('Valeria', 'Mendoza', 87654991, 22994455, 'valeria19@example.com', '2024
 --  El mismo nos dará el error: 'El correo electrónico ya está registrado en otro socio'
 
 
+**ROLES Y USUARIOS.**
+
+ROLES:
+1. Rol adminitrativo.
+
+Este rol tiene control total sobre todas las tablas y puede realizar cualquier operación, incluyendo la creación, modificación, y eliminación de tablas, así como la administración de usuarios y roles.
+
+Usuario: admin_user
+
+2. Rol de gestor de reservas.
+
+Este rol se encarga de gestionar las reservas, así como de actualizar información relacionada con los socios y las actividades.
+
+Usuario: reservas_manager
+
+3. Rol de gestor de sedes.
+   
+Adminitra la información relacionada con las sedes y los dueños. Puede agregar nuevas sedes y dueños, así como modificar y eliminar los registros existentes.
+
+Usuario: sedes_manager
+
+4. Rol de gestor de profesores
+   
+Permite gestionar la información de los profesores, incluyendo su asignación a actividades y sedes.
+
+ Usuario: profesores_manager
+ 
+5. Rol de socio
+   
+Este rol tiene permisos limitados para actualizar solo la información de los socios y consultar datos relacionados con sus reservas y actividades.
+
+Usuario: servicio_socio
 
 
