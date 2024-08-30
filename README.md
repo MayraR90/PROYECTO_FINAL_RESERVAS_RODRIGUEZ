@@ -16,7 +16,6 @@
 **DOCENTE:** *ANDERSON MICHEL TORRES*
 
 ![image](https://github.com/user-attachments/assets/5254fe86-30d4-4e12-be11-f260f96ec6e6)
-![image](https://github.com/user-attachments/assets/61141331-3279-4a01-a9f1-d68410d4dad1)
 
 
 ---
@@ -181,9 +180,67 @@ Este rol tiene permisos limitados para actualizar solo la información de los so
 Usuario: servicio_socio
 
 
+SE PROCEDE A CREAR LOS USUARIOS:
+CREATE USER 'admin_user'@'localhost' IDENTIFIED BY 'password123';
+CREATE USER 'reservas_manager'@'localhost' IDENTIFIED BY 'password123';
+CREATE USER 'sedes_manager'@'localhost' IDENTIFIED BY 'password123';
+CREATE USER 'profesores_manager'@'localhost' IDENTIFIED BY 'password123';
+CREATE USER 'servicio_socio'@'localhost' IDENTIFIED BY 'password123';
+
+Y LUEGO,LOS ROLES:
+CREATE ROLE 'admin_role';
+CREATE ROLE 'gestor_reservas_role';
+CREATE ROLE 'gestor_sedes_role';
+CREATE ROLE 'gestor_profesores_role';
+CREATE ROLE 'socio_role';
+
+ASIGNACIÓN DE ROLES:
+1. Rol administrativo con permisos completos
+
+GRANT ALL PRIVILEGES ON *.* TO 'admin_role';
+
+2. Rol de gestor de reservas
+GRANT SELECT, INSERT, UPDATE, DELETE ON PROYECTO_RESERVAS.RESERVAS TO 'gestor_reservas_role';
+GRANT SELECT, UPDATE ON PROYECTO_RESERVAS.SOCIOS TO 'gestor_reservas_role';
+GRANT SELECT, UPDATE ON PROYECTO_RESERVAS.ACTIVIDADES TO 'gestor_reservas_role';
+
+3. Rol de gestor de sedes
+GRANT SELECT, INSERT, UPDATE, DELETE ON PROYECTO_RESERVAS.SEDE TO 'gestor_sedes_role';
+GRANT SELECT, INSERT, UPDATE, DELETE ON PROYECTO_RESERVAS.DUENO TO 'gestor_sedes_role';
+
+4. Rol de gestor de profesores
+GRANT SELECT, INSERT, UPDATE, DELETE ON PROYECTO_RESERVAS.PROFESORES TO 'gestor_profesores_role';
+GRANT SELECT ON PROYECTO_RESERVAS.ACTIVIDADES TO 'gestor_profesores_role';
+GRANT SELECT ON PROYECTO_RESERVAS.SEDE TO 'gestor_profesores_role';
+
+5. Rol de socio con permisos limitados
+GRANT SELECT, UPDATE ON PROYECTO_RESERVAS.SOCIOS TO 'socio_role';
+GRANT SELECT ON PROYECTO_RESERVAS.RESERVAS TO 'socio_role';
+GRANT SELECT ON PROYECTO_RESERVAS.ACTIVIDADES TO 'socio_role';
+
+
+ASIGNACIÓN DE ROLES A USUARIOS.
+
+GRANT 'admin_role' TO 'admin_user'@'localhost';
+GRANT 'gestor_reservas_role' TO 'reservas_manager'@'localhost';
+GRANT 'gestor_sedes_role' TO 'sedes_manager'@'localhost';
+GRANT 'gestor_profesores_role' TO 'profesores_manager'@'localhost';
+GRANT 'socio_role' TO 'servicio_socio'@'localhost';
+
+
+
 Una vez creados los roles, usarios y asignaciones, se activan los roles y se actualizan los privilegios con los siguientes respectivos comandos:
 
-COMPLETAR ESTA PARTE CON LA ACTIVACIÓN Y LOS CÓGIDOS EN SQL.
+Se  activarán los diferentes roles:
+
+SET ROLE 'admin_role';
+SET ROLE 'gestor_reservas_role';
+SET ROLE 'gestor_sedes_role';
+SET ROLE 'gestor_profesores_role';
+SET ROLE 'socio_role';
+
+Y luego, se actualizarán los privilegios en el servidor
+FLUSH PRIVILEGES;
 
 --- 
 **LENGUAJE DE CONTROL DE TRANSACCIONES (TCL):APLICADO A STORE PROCEDURES.**
@@ -219,9 +276,10 @@ BUSCAR UN SOCIO DE EJEMPLO.
 START TRANSACTION;
 
 BEGIN
-    -- Llamada al procedimiento almacenado para actualizar la información de un socio
-    CALL actualizar_socio(1, 'Pedro', 'Ramírez', 12345601, 23456701, 'pedro23@example.com', '2023-01-01 10:00:00');
+    -- Llamada al procedimiento almacenado para actualizar la información de un socio (en este caso,el teléfono)
     
+    CALL actualizar_socio('Julia', 'Martínez', 45000994, 1234897894, 'julia.martinez8@example.com', '2024-09-15 10:00:00');
+  
     -- Si todo se ejecuta correctamente, confirmamos la transacción
     COMMIT;
 
