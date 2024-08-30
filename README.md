@@ -144,7 +144,7 @@ SE USARÁ A MODO DE EJEMPLO LA SIGUIENTE INSERCIÓN DE DATOS,USANDO EL MAIL DE L
 
 --  El mismo nos dará el error: 'El correo electrónico ya está registrado en otro socio'
 
-
+--- 
 **ROLES Y USUARIOS.**
 
 ROLES:
@@ -183,7 +183,7 @@ Una vez creados los roles, usarios y asignaciones, se activan los roles y se act
 
 COMPLETAR ESTA PARTE CON LA ACTIVACIÓN Y LOS CÓGIDOS EN SQL.
 
-
+--- 
 **LENGUAJE DE CONTROL DE TRANSACCIONES (TCL):APLICADO A STORE PROCEDURES.**
 
 EJEMPLO N° 1:insertar_socio.
@@ -228,7 +228,8 @@ EXCEPTION
     ROLLBACK;
 END;
 
+---
 **BACKUP**
 
-![image](https://github.com/user-attachments/assets/5ef19cb2-294d-4aac-b404-139aae4d4fbe)
+
 
