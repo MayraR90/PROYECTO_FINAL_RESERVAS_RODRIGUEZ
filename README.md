@@ -16,6 +16,8 @@
 **DOCENTE:** *ANDERSON MICHEL TORRES*
 
 ![image](https://github.com/user-attachments/assets/5254fe86-30d4-4e12-be11-f260f96ec6e6)
+![image](https://github.com/user-attachments/assets/61141331-3279-4a01-a9f1-d68410d4dad1)
+
 
 ---
 ## PROBLEMA
