@@ -256,8 +256,13 @@ DESCRIPCIÓN:ASEGURA QUE LA ACTUALIZACIÓN DE LA INFORMACIÓN DE UN SOCIO EN LA 
 ![image](https://github.com/user-attachments/assets/d28aed15-f8b2-4bf8-a1a9-577d99bc476e)
 
 
-VERSIÓN N°1:
+**VERSIONES DEL TRABAJO**
+
+* VERSIÓN N°1:
 https://github.com/MayraR90/PROYECTO_RESERVAS_RODRIGUEZ.git
+
+* VERSIÓN N°2:
+https://github.com/MayraR90/SEGUNDAPREENTREGA.RODRIGUEZ.git
 
 
 Herramientas adicionales: | ChatGPT | Excalidraw
