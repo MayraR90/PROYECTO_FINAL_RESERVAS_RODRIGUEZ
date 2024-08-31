@@ -257,3 +257,4 @@ DESCRIPCIÓN:ASEGURA QUE LA ACTUALIZACIÓN DE LA INFORMACIÓN DE UN SOCIO EN LA 
 
 
 
+Herramientas adicionales: | ChatGPT | Excalidraw
