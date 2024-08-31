@@ -1,0 +1,646 @@
+-- BORRAMOS LA BASE DE DATOS SOLO SI YA EXISTE PREVIAMENTE
+drop database if EXISTS PROYECTO_RESERVAS;
+
+-- CREAMOS LA BASE DE DATOS
+create database PROYECTO_RESERVAS;
+
+use PROYECTO_RESERVAS;
+
+-- CREAMOS LA TABLA SOCIOS
+create table SOCIOS (
+	ID_SOCIO INT primary key not null AUTO_INCREMENT 
+,	NOMBRE VARCHAR (50) not null
+,	APELLIDO VARCHAR (50) not null
+,	DNI INT unique not null
+,	TELEFONO INT not NULL
+,	MAIL VARCHAR (60) not null unique 
+,	FECHA_ALTA datetime
+);
+
+-- CREAMOS LA TABLA RESERVAS
+create table RESERVAS(
+	ID_RESERVA int primary key not null auto_increment
+,	FECHA_HORA datetime
+,	CANCELACION DATETIME
+,	ID_SOCIO int 
+,	ID_ACTIVIDAD int
+,	ID_PROFESOR int
+,	ID_SEDE int
+);
+
+-- CREAMOS LA TABLA ACTIVIDADES
+create table ACTIVIDADES (
+	ID_ACTIVIDAD int unique primary key not null auto_increment
+,	NOMBRE varchar (50) not null
+,	DISPONIBILIDAD boolean not null
+, 	FECHA_HORA DATETIME
+,	ID_PROFESOR int
+);
+
+-- CREAMOS LA TABLA SEDE
+create table SEDE (
+	ID_SEDE INT primary key not null AUTO_INCREMENT
+,	DIRECCION VARCHAR (100)
+,	TELEFONO INT 
+,	ID_DUENO INT
+);
+
+-- CREAMOS LA TABLA DUEÑO
+create table DUENO (
+	ID_DUENO INT primary key not null AUTO_INCREMENT
+,	NOMBRE VARCHAR (50) 
+,	APELLIDO VARCHAR (50)
+,	TELEFONO INT not NULL
+);
+
+-- CREAMOS LA TABLA PROFESORES
+create table PROFESORES (
+	ID_PROFESOR INT unique primary key not null auto_increment 
+,	NOMBRES VARCHAR (50) not null
+,   APELLIDO VARCHAR (50) not null
+,	DNI INT unique
+,	TELEFONO int
+,	ALTA datetime
+,	ID_ACTIVIDAD INT
+,	ID_SEDE int
+);
+
+
+-- DEFINIMOS LAS FOREIGN KEYS DE CADA UNA DE LAS TABLAS
+
+-- TABLA RESERVAS
+
+ALTER TABLE RESERVAS
+    ADD CONSTRAINT FK_RESERVAS_SOCIO
+    FOREIGN KEY (ID_SOCIO) REFERENCES SOCIOS(ID_SOCIO);
+
+ALTER TABLE RESERVAS
+    ADD CONSTRAINT FK_RESERVAS_ACTIVIDAD
+    FOREIGN KEY (ID_ACTIVIDAD) REFERENCES ACTIVIDADES(ID_ACTIVIDAD);
+    
+ALTER TABLE RESERVAS
+    ADD CONSTRAINT FK_RESERVAS_PROFESOR
+    FOREIGN KEY (ID_PROFESOR) REFERENCES PROFESORES(ID_PROFESOR);
+    
+ALTER TABLE RESERVAS
+    ADD CONSTRAINT FK_RESERVAS_SEDE
+    FOREIGN KEY (ID_SEDE) REFERENCES SEDE(ID_SEDE);
+
+-- TABLA DUENO
+
+ALTER TABLE SEDE
+	ADD CONSTRAINT FK_SEDE_DUENO
+    FOREIGN KEY (ID_DUENO) REFERENCES DUENO(ID_DUENO);
+
+-- TABLA PROFESORES
+
+ALTER TABLE PROFESORES
+    ADD CONSTRAINT FK_PROFESOR_ACTIVIDAD
+    FOREIGN KEY (ID_ACTIVIDAD) REFERENCES ACTIVIDADES(ID_ACTIVIDAD);
+    
+ALTER TABLE PROFESORES
+    ADD CONSTRAINT FK_PROFESOR_SEDE
+    FOREIGN KEY (ID_SEDE) REFERENCES SEDE(ID_SEDE);
+
+-- TABLA ACTIVIDADES
+
+ALTER TABLE ACTIVIDADES
+    ADD CONSTRAINT FK_ACTIVIDAD_PROFESOR
+    FOREIGN KEY (ID_PROFESOR) REFERENCES PROFESORES(ID_PROFESOR);
+    
+-- SHOW tables FROM proyecto_reservas;
+
+-- ------------------------------------
+
+-- "2° PREENTREGA DEL TRABAJO FINAL"
+
+-- Vamos a insertar datos
+
+-- desactivamos la validación de clave foranea
+SET foreign_key_checks = 0;
+
+-- vamos a insertar datos en las tablas con el siguiente orden: dueno, sede, socios, profesores, actividades y reservas.
+
+use proyecto_reservas;
+
+-- insertamos datos en la tabla dueno
+INSERT INTO DUENO (ID_DUENO, NOMBRE, APELLIDO, TELEFONO) VALUES
+(1, 'Roberto', 'Jiménez', 45345601),
+(2, 'Santiago', 'Paredes', 45345602),
+(3, 'Mónica', 'Castillo', 45345603),
+(4, 'Raúl', 'Guzmán', 45345604),
+(5, 'Sara', 'Soto', 45345605),
+(6, 'Tomás', 'Campos', 45345606),
+(7, 'Lorena', 'Suárez', 45345607),
+(8, 'David', 'Vargas', 45345608),
+(9, 'Elena', 'Muñoz', 45345609),
+(10, 'Clara', 'Ibáñez', 45345610);
+
+-- insertamos datos en la tabla sede
+INSERT INTO SEDE (ID_SEDE, DIRECCION, TELEFONO, ID_DUENO) VALUES
+(1, 'Av. Siempre Viva 123', 36345601, 1),
+(2, 'Calle Falsa 456', 36345602, 2),
+(3, 'Pasaje Verdadero 789', 36345603, 3),
+(4, 'Boulevard Principal 101', 36345604, 4),
+(5, 'Camino Real 102', 36345605, 5),
+(6, 'Ruta 103', 36345606, 6),
+(7, 'Avenida Central 104', 36345607, 7),
+(8, 'Callejón 105', 36345608, 8),
+(9, 'Plaza Mayor 106', 36345609, 9),
+(10, 'Parque 107', 36345610, 10);
+
+-- insertamos datos en la tabla socios
+INSERT INTO SOCIOS (ID_SOCIO, NOMBRE, APELLIDO, DNI, TELEFONO, MAIL, FECHA_ALTA) VALUES
+(1, 'Pedro', 'Ramírez', 12345601, 23456701, 'pedro1@example.com', '2023-01-01 10:00:00'),
+(2, 'Juan', 'González', 12345602, 23456702, 'juan2@example.com', '2023-02-01 11:00:00'),
+(3, 'María', 'López', 12345603, 23456703, 'maria3@example.com', '2023-03-01 12:00:00'),
+(4, 'Ana', 'Martínez', 12345604, 23456704, 'ana4@example.com', '2023-04-01 13:00:00'),
+(5, 'Luis', 'Hernández', 12345605, 23456705, 'luis5@example.com', '2023-05-01 14:00:00'),
+(6, 'Carlos', 'Gómez', 12345606, 23456706, 'carlos6@example.com', '2023-06-01 15:00:00'),
+(7, 'Laura', 'Díaz', 12345607, 23456707, 'laura7@example.com', '2023-07-01 16:00:00'),
+(8, 'Jorge', 'Pérez', 12345608, 23456708, 'jorge8@example.com', '2023-08-01 17:00:00'),
+(9, 'Sofía', 'Sánchez', 12345609, 23456709, 'sofia9@example.com', '2023-09-01 18:00:00'),
+(10, 'Marta', 'Romero', 12345610, 23456710, 'marta10@example.com', '2023-10-01 19:00:00'),
+(11, 'Hugo', 'Torres', 12345611, 23456711, 'hugo11@example.com', '2023-11-01 20:00:00'),
+(12, 'Lucas', 'Mendoza', 12345612, 23456712, 'lucas12@example.com', '2023-12-01 21:00:00'),
+(13, 'Daniela', 'Cruz', 12345613, 23456713, 'daniela13@example.com', '2024-01-01 22:00:00'),
+(14, 'Emilia', 'Reyes', 12345614, 23456714, 'emilia14@example.com', '2024-02-01 23:00:00'),
+(15, 'Iván', 'Ruiz', 12345615, 23456715, 'ivan15@example.com', '2024-03-01 10:00:00'),
+(16, 'Nicolás', 'Ortega', 12345616, 23456716, 'nicolas16@example.com', '2024-04-01 11:00:00'),
+(17, 'Camila', 'Silva', 12345617, 23456717, 'camila17@example.com', '2024-05-01 12:00:00'),
+(18, 'Gabriela', 'Ramos', 12345618, 23456718, 'gabriela18@example.com', '2024-06-01 13:00:00'),
+(19, 'Valeria', 'Moreno', 12345619, 23456719, 'valeria19@example.com', '2023-01-01 14:00:00'),
+(20, 'Martín', 'Rojas', 12345620, 23456720, 'martin20@example.com', '2023-02-01 15:00:00'),
+(21, 'Fernando', 'Peña', 12345621, 23456721, 'fernando21@example.com', '2023-03-01 16:00:00'),
+(22, 'Paula', 'Navarro', 12345622, 23456722, 'paula22@example.com', '2023-04-01 17:00:00'),
+(23, 'Andrea', 'Rivera', 12345623, 23456723, 'andrea23@example.com', '2023-05-01 18:00:00'),
+(24, 'Manuel', 'Román', 12345624, 23456724, 'manuel24@example.com', '2023-06-01 19:00:00'),
+(25, 'Inés', 'Flores', 12345625, 23456725, 'ines25@example.com', '2023-07-01 20:00:00'),
+(26, 'Julieta', 'Aguilar', 12345626, 23456726, 'julieta26@example.com', '2023-08-01 21:00:00'),
+(27, 'Santiago', 'Molina', 12345627, 23456727, 'santiago27@example.com', '2023-09-01 22:00:00'),
+(28, 'Victoria', 'Ortiz', 12345628, 23456728, 'victoria28@example.com', '2023-10-01 23:00:00'),
+(29, 'Esteban', 'Blanco', 12345629, 23456729, 'esteban29@example.com', '2023-11-01 10:00:00'),
+(30, 'Isabel', 'Castro', 12345630, 23456730, 'isabel30@example.com', '2023-12-01 11:00:00');
+
+-- insertamos datos en la tabla profesores
+INSERT INTO PROFESORES (ID_PROFESOR, NOMBRES, APELLIDO, DNI, TELEFONO, ALTA, ID_ACTIVIDAD, ID_SEDE) VALUES
+(1, 'Laura', 'García', 22345601, 32345601, '2023-01-01 10:00:00', 1, 1),
+(2, 'Pedro', 'Martínez', 22345602, 32345602, '2023-02-01 11:00:00', 2, 2),
+(3, 'Juan', 'Pérez', 22345603, 32345603, '2023-03-01 12:00:00', 3, 3),
+(4, 'Ana', 'López', 22345604, 32345604, '2023-04-01 13:00:00', 4, 4),
+(5, 'Luis', 'Gómez', 22345605, 32345605, '2023-05-01 14:00:00', 5, 5),
+(6, 'Carlos', 'Rodríguez', 22345606, 32345606, '2023-06-01 15:00:00', 6, 6),
+(7, 'Laura', 'Fernández', 22345607, 32345607, '2023-07-01 16:00:00', 7, 7),
+(8, 'Jorge', 'Sánchez', 22345608, 32345608, '2023-08-01 17:00:00', 8, 8),
+(9, 'Sofía', 'Ramírez', 22345609, 32345609, '2023-09-01 18:00:00', 9, 9),
+(10, 'Marta', 'Díaz', 22345610, 32345610, '2023-10-01 19:00:00', 10, 10),
+(11, 'Hugo', 'Cruz', 22345611, 32345611, '2023-11-01 20:00:00', 11, 1),
+(12, 'Lucas', 'Morales', 22345612, 32345612, '2023-12-01 21:00:00', 12, 2),
+(13, 'Daniela', 'Herrera', 22345613, 32345613, '2024-01-01 22:00:00', 13, 3),
+(14, 'Emilia', 'Reyes', 22345614, 32345614, '2024-02-01 23:00:00', 14, 4),
+(15, 'Iván', 'Ruiz', 22345615, 32345615, '2024-03-01 10:00:00', 15, 5),
+(16, 'Nicolás', 'Ortega', 22345616, 32345616, '2024-04-01 11:00:00', 16, 6),
+(17, 'Camila', 'Silva', 22345617, 32345617, '2024-05-01 12:00:00', 17, 7),
+(18, 'Gabriela', 'Ramos', 22345618, 32345618, '2024-06-01 13:00:00', 18, 8),
+(19, 'Valeria', 'Moreno', 22345619, 32345619, '2023-01-01 14:00:00', 19, 9),
+(20, 'Martín', 'Rojas', 22345620, 32345620, '2023-02-01 15:00:00', 20, 10),
+(21, 'Fernando', 'Peña', 22345621, 32345621, '2023-03-01 16:00:00', 21, 1),
+(22, 'Paula', 'Navarro', 22345622, 32345622, '2023-04-01 17:00:00', 22, 2),
+(23, 'Andrea', 'Rivera', 22345623, 32345623, '2023-05-01 18:00:00', 23, 3),
+(24, 'Manuel', 'Román', 22345624, 32345624, '2023-06-01 19:00:00', 24, 4),
+(25, 'Inés', 'Flores', 22345625, 32345625, '2023-07-01 20:00:00', 25, 5),
+(26, 'Julieta', 'Aguilar', 22345626, 32345626, '2023-08-01 21:00:00', 26, 6),
+(27, 'Santiago', 'Molina', 22345627, 32345627, '2023-09-01 22:00:00', 27, 7),
+(28, 'Victoria', 'Ortiz', 22345628, 32345628, '2023-10-01 23:00:00', 28, 8),
+(29, 'Esteban', 'Blanco', 22345629, 32345629, '2023-11-01 10:00:00', 29, 9),
+(30, 'Isabel', 'Castro', 22345630, 32345630, '2023-12-01 11:00:00', 30, 10);
+
+-- insertamos datos en la tabla actividades
+INSERT INTO ACTIVIDADES (ID_ACTIVIDAD, NOMBRE, DISPONIBILIDAD, FECHA_HORA, ID_PROFESOR) VALUES
+(1, 'Yoga', TRUE, '2023-01-01 10:00:00', 1),
+(2, 'Pilates', TRUE, '2023-02-01 11:00:00', 2),
+(3, 'Zumba', TRUE, '2023-03-01 12:00:00', 3),
+(4, 'Crossfit', TRUE, '2023-04-01 13:00:00', 4),
+(5, 'Spinning', TRUE, '2023-05-01 14:00:00', 5),
+(6, 'Karate', TRUE, '2023-06-01 15:00:00', 6),
+(7, 'Boxeo', TRUE, '2023-07-01 16:00:00', 7),
+(8, 'Natación', TRUE, '2023-08-01 17:00:00', 8),
+(9, 'Aerobics', TRUE, '2023-09-01 18:00:00', 9),
+(10, 'Baile', TRUE, '2023-10-01 19:00:00', 10),
+(11, 'Tennis', TRUE, '2023-11-01 20:00:00', 11),
+(12, 'Fútbol', TRUE, '2023-12-01 21:00:00', 12),
+(13, 'Vóley', TRUE, '2024-01-01 22:00:00', 13),
+(14, 'Basketball', TRUE, '2024-02-01 23:00:00', 14),
+(15, 'Rugby', TRUE, '2024-03-01 10:00:00', 15),
+(16, 'Hockey', TRUE, '2024-04-01 11:00:00', 16),
+(17, 'Gimnasia', TRUE, '2024-05-01 12:00:00', 17),
+(18, 'Ciclismo', TRUE, '2024-06-01 13:00:00', 18),
+(19, 'Atletismo', TRUE, '2023-01-01 14:00:00', 19),
+(20, 'Escalada', TRUE, '2023-02-01 15:00:00', 20),
+(21, 'Judo', TRUE, '2023-03-01 16:00:00', 21),
+(22, 'Taekwondo', TRUE, '2023-04-01 17:00:00', 22),
+(23, 'Kickboxing', TRUE, '2023-05-01 18:00:00', 23),
+(24, 'Capoeira', TRUE, '2023-06-01 19:00:00', 24),
+(25, 'Patinaje', TRUE, '2023-07-01 20:00:00', 25),
+(26, 'Escalada', TRUE, '2023-08-01 21:00:00', 26),
+(27, 'Senderismo', TRUE, '2023-09-01 22:00:00', 27),
+(28, 'Surf', TRUE, '2023-10-01 23:00:00', 28),
+(29, 'Esquí', TRUE, '2023-11-01 10:00:00', 29),
+(30, 'Snowboard', TRUE, '2023-12-01 11:00:00', 30);
+
+-- insertamos datos en la tabla reservas
+INSERT INTO RESERVAS (ID_RESERVA, FECHA_HORA, CANCELACION, ID_SOCIO, ID_ACTIVIDAD, ID_PROFESOR, ID_SEDE) VALUES
+(1, '2023-01-01 10:00:00', NULL, 1, 1, 1, 1),
+(2, '2023-02-01 11:00:00', NULL, 2, 2, 2, 2),
+(3, '2023-03-01 12:00:00', NULL, 3, 3, 3, 3),
+(4, '2023-04-01 13:00:00', NULL, 4, 4, 4, 4),
+(5, '2023-05-01 14:00:00', NULL, 5, 5, 5, 5),
+(6, '2023-06-01 15:00:00', NULL, 6, 6, 6, 6),
+(7, '2023-07-01 16:00:00', NULL, 7, 7, 7, 7),
+(8, '2023-08-01 17:00:00', NULL, 8, 8, 8, 8),
+(9, '2023-09-01 18:00:00', NULL, 9, 9, 9, 9),
+(10, '2023-10-01 19:00:00', NULL, 10, 10, 10, 10),
+(11, '2023-11-01 20:00:00', NULL, 11, 11, 11, 1),
+(12, '2023-12-01 21:00:00', NULL, 12, 12, 12, 2),
+(13, '2024-01-01 22:00:00', NULL, 13, 13, 13, 3),
+(14, '2024-02-01 23:00:00', NULL, 14, 14, 14, 4),
+(15, '2024-03-01 10:00:00', NULL, 15, 15, 15, 5),
+(16, '2024-04-01 11:00:00', NULL, 16, 16, 16, 6),
+(17, '2024-05-01 12:00:00', NULL, 17, 17, 17, 7),
+(18, '2024-06-01 13:00:00', NULL, 18, 18, 18, 8),
+(19, '2023-01-01 14:00:00', NULL, 19, 19, 19, 9),
+(20, '2023-02-01 15:00:00', NULL, 20, 20, 20, 10),
+(21, '2023-03-01 16:00:00', NULL, 21, 21, 21, 1),
+(22, '2023-04-01 17:00:00', NULL, 22, 22, 22, 2),
+(23, '2023-05-01 18:00:00', NULL, 23, 23, 23, 3),
+(24, '2023-06-01 19:00:00', NULL, 24, 24, 24, 4),
+(25, '2023-07-01 20:00:00', NULL, 25, 25, 25, 5),
+(26, '2023-08-01 21:00:00', NULL, 26, 26, 26, 6),
+(27, '2023-09-01 22:00:00', NULL, 27, 27, 27, 7),
+(28, '2023-10-01 23:00:00', NULL, 28, 28, 28, 8),
+(29, '2023-11-01 10:00:00', NULL, 29, 29, 29, 9),
+(30, '2023-12-01 11:00:00', NULL, 30, 30, 30, 10);
+
+-- activamos la validación de clave foranea
+-- SET foreign_key_checks = 1;
+
+-- Luego de insertar los datos vamos a verificar las tablas
+
+-- select * from  dueno;
+-- select * from  sede;
+-- select * from  profesores;
+-- select * from  actividades;
+-- select * from  socios;
+-- select * from  reservas;
+
+
+
+-- VISTA N° 1.ALTA DE SOCIOS ENTRE EL 01 DE ENERO DE 2024 Y 30 DE JUNIO DE 2024.
+USE PROYECTO_RESERVAS;
+CREATE OR REPLACE VIEW VISTA_SOCIOS_FILTRO AS
+(SELECT ID_SOCIO, NOMBRE, APELLIDO,FECHA_ALTA
+FROM SOCIOS
+WHERE FECHA_ALTA BETWEEN '2024-01-01 00:00:00' AND '2024-06-30 23:59:59');
+
+-- SELECT * FROM VISTA_SOCIOS_FILTRO;
+
+-- VISTA N° 2.RESERVAS CON LA ACTIVIDAD FUTBOL
+USE PROYECTO_RESERVAS;
+CREATE OR REPLACE VIEW VISTA_RESERVAS_FUTBOL AS
+(SELECT ID_RESERVA,ID_ACTIVIDAD,ID_SEDE  
+FROM RESERVAS
+WHERE ID_ACTIVIDAD = 12);
+
+-- SELECT * FROM VISTA_RESERVAS_FUTBOL;
+
+-- VISTA N° 3. ACTIVIDAD SPINNING
+USE PROYECTO_RESERVAS;
+CREATE OR REPLACE VIEW VISTA_SPINNING AS
+(SELECT 
+	a.ID_ACTIVIDAD,
+    a.NOMBRE AS ACTIVIDAD,
+    p.APELLIDO AS PROFESOR,
+    s.direccion AS DIRECCION_DE_SEDE
+FROM ACTIVIDADES a
+JOIN PROFESORES p ON A.ID_ACTIVIDAD = P.ID_ACTIVIDAD
+JOIN SEDE s ON  p.ID_SEDE = s.ID_SEDE
+WHERE 
+	A.NOMBRE = 'SPINNING');
+
+-- SELECT * FROM VISTA_SPINNING;
+
+
+-- VISTA N° 4. VISTA DE PROFESORES Y ACTIVIDADES POR SEDE --
+USE PROYECTO_RESERVAS;
+CREATE OR REPLACE VIEW PROFESORES_SEDE AS
+(SELECT 
+	SEDE.ID_SEDE, 
+	PROFESORES.APELLIDO AS PROFESOR,
+	ACTIVIDADES.NOMBRE AS ACTIVIDAD
+FROM PROFESORES
+JOIN SEDE ON SEDE.ID_SEDE = PROFESORES.ID_SEDE
+JOIN ACTIVIDADES ON PROFESORES.ID_PROFESOR = ACTIVIDADES.ID_PROFESOR);
+
+-- SELECT * FROM PROFESORES_SEDE;
+
+
+-- VISTA N° 5. VISTA DE LAS RESERVAS DE LA ACTIVIDAD "PILATES"-
+USE PROYECTO_RESERVAS;
+CREATE OR REPLACE VIEW RESERVAS_PILATES AS
+(SELECT 
+	RESERVAS.ID_ACTIVIDAD,
+	ACTIVIDADES.NOMBRE AS ACTIVIDAD,
+	RESERVAS.FECHA_HORA AS DISPONIBILIDAD, 
+	SEDE.DIRECCION AS DIRECCION
+FROM ACTIVIDADES
+JOIN RESERVAS ON RESERVAS.ID_ACTIVIDAD = ACTIVIDADES.ID_ACTIVIDAD
+JOIN SEDE ON SEDE.ID_SEDE = RESERVAS.ID_SEDE
+WHERE RESERVAS.ID_ACTIVIDAD = 2);
+
+-- SELECT * FROM RESERVAS_PILATES;
+
+
+-- VISTA N° 6. VISTA CON LAS ACTIVIDADES QUE DICTAMOS.
+USE PROYECTO_RESERVAS;
+CREATE OR REPLACE VIEW VISTA_ACTIVIDADES AS
+(SELECT ID_ACTIVIDAD, NOMBRE 
+FROM ACTIVIDADES);
+
+-- SELECT * FROM VISTA_ACTIVIDADES;
+
+-- ----------------------------FUNCIONES-----------------------------------------
+-- Función para contar el número de reservas de un socio específico--
+DROP FUNCTION IF EXISTS contar_reservas_socio;
+DELIMITER //
+CREATE FUNCTION contar_reservas_socio(socio_id INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE num_reservas INT;
+    SELECT COUNT(*) INTO num_reservas
+    FROM RESERVAS
+    WHERE ID_SOCIO = socio_id;
+    RETURN num_reservas;
+END //
+DELIMITER ;
+
+-- EJEMPLO DE USO.SE CONSULTARÁ POR EL SOCIO 8--
+-- SELECT contar_reservas_socio(8) AS num_reservas;
+
+-- Función para obtener la dirección de la sede donde un profesor dicta una actividad--
+DROP FUNCTION IF EXISTS obtener_profesor_actividad;
+DELIMITER //
+CREATE FUNCTION obtener_profesor_actividad(actividad_nombre VARCHAR(50))
+RETURNS VARCHAR(100)
+DETERMINISTIC
+BEGIN
+    DECLARE profesor_nombre VARCHAR(100);
+    SELECT CONCAT(p.NOMBRES, ' ', p.APELLIDO) INTO profesor_nombre
+    FROM ACTIVIDADES a
+    JOIN PROFESORES p ON a.ID_PROFESOR = p.ID_PROFESOR
+    WHERE a.NOMBRE = actividad_nombre;
+    RETURN profesor_nombre;
+END //
+DELIMITER ;
+
+-- EJEMPLO DE USO:SE CONSULTARÁ EL NOMBRE DEL PROFESOR QUE DICTA SPINNING--
+-- SELECT obtener_profesor_actividad('Spinning') AS profesor_nombre;
+
+-- Función para obtener el nombre completo de un profesor que dicta una actividad específica--
+DROP FUNCTION IF EXISTS obtener_direccion_sede;
+DELIMITER //
+CREATE FUNCTION obtener_direccion_sede(profesor_id INT)
+RETURNS VARCHAR(100)
+DETERMINISTIC
+BEGIN
+    DECLARE sede_direccion VARCHAR(100);
+    SELECT s.DIRECCION INTO sede_direccion
+    FROM SEDE s
+    JOIN PROFESORES p ON s.ID_SEDE = p.ID_SEDE
+    WHERE p.ID_PROFESOR = profesor_id;
+    RETURN sede_direccion;
+END //
+DELIMITER ;
+
+-- EJEMPLO DE USO:DIRECCION  DE LA SEDE DEL PROFESOR CON ID 30--
+-- SELECT obtener_direccion_sede(30);
+
+
+-- CREACIÓN DE STORED PROCEDURES--
+DROP PROCEDURE IF EXISTS insertar_socio;
+DELIMITER //
+CREATE PROCEDURE insertar_socio(
+    IN NOMBRE VARCHAR(50),
+    IN APELLIDO VARCHAR(50),
+    IN DNI INT,
+    IN TELEFONO INT,
+    IN MAIL VARCHAR(60),
+    IN FECHA_ALTA DATETIME
+)
+BEGIN
+    INSERT INTO SOCIOS (NOMBRE, APELLIDO, DNI, TELEFONO, MAIL, FECHA_ALTA)
+    VALUES (nombre, apellido, dni, telefono, mail, fecha_alta);
+END //
+DELIMITER ;
+
+-- EJEMPLO DE USO--
+-- CALL insertar_socio('Juan', 'Perez', 12345678, 987654321, 'juan.perez@example.com', '2024-06-15 12:00:00');
+
+-- SELECT * FROM SOCIOS;
+
+DROP PROCEDURE IF EXISTS actualizar_disponibilidad_actividad;
+DELIMITER //
+CREATE PROCEDURE actualizar_disponibilidad_actividad(
+    IN actividad_id INT,
+    IN nueva_disponibilidad BOOLEAN
+)
+BEGIN
+    UPDATE ACTIVIDADES
+    SET DISPONIBILIDAD = nueva_disponibilidad
+    WHERE ID_ACTIVIDAD = actividad_id;
+END //
+DELIMITER ;
+-- EJEMPLO DE USO-- SE CAMBIA TRUE POR FALSE--
+-- CALL actualizar_disponibilidad_actividad(1,FALSE);
+-- SELECT * FROM ACTIVIDADES;
+
+
+DROP PROCEDURE IF EXISTS actualizar_socio;
+DELIMITER //
+CREATE PROCEDURE actualizar_socio(
+    IN socio_id INT,
+    IN nuevo_nombre VARCHAR(50),
+    IN nuevo_apellido VARCHAR(50),
+    IN nuevo_dni INT,
+    IN nuevo_telefono INT,
+    IN nuevo_mail VARCHAR(60),
+    IN nueva_fecha_alta DATETIME
+)
+BEGIN
+    UPDATE SOCIOS
+    SET NOMBRE = nuevo_nombre,
+        APELLIDO = nuevo_apellido,
+        DNI = nuevo_dni,
+        TELEFONO = nuevo_telefono,
+        MAIL = nuevo_mail,
+        FECHA_ALTA = nueva_fecha_alta
+    WHERE ID_SOCIO = socio_id;
+END //
+DELIMITER ;
+-- EJEMPLO DE USO-- 
+-- CALL actualizar_socio(1, 'Mariana', 'Lopez', 87654321, 123456789, 'mariana.lopez@example.com', '2024-06-20 10:00:00');
+
+
+
+-- PROYECTO FINAL--
+
+-- TRIGGERS--
+-- ESTOS TRIGGERS NOS PERMITEN AUTOMATIZAR ALGUNAS TAREAS EN LA BASE DE DATOS COMO LA PREVENCIÓN DE ERRORES Y DUPLICADO DE RESERVAS
+-- EJEMPLO N° 1: Trigger para evitar duplicados de DNI entre tablas
+
+DROP TRIGGER IF EXISTS VERIFICAR_DNI_UNICO;
+
+DELIMITER //
+
+CREATE TRIGGER VERIFICAR_DNI_UNICO
+BEFORE INSERT ON PROFESORES
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT 1 FROM SOCIOS WHERE DNI = NEW.DNI) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'EL DNI YA EXISTE EN LA TABLA SOCIOS';
+    END IF;
+END //
+
+DELIMITER ;
+
+-- Se usará a modo de ejemplo la siguiente inserción de datos para verificar el trigger
+-- INSERT INTO PROFESORES (NOMBRES, APELLIDO, DNI, TELEFONO, ALTA, ID_ACTIVIDAD, ID_SEDE)
+-- VALUES ('Macarena', 'Gutierrez', 12345601, 399349960, '2023-01-01 10:00:00', 1, 1);
+
+
+
+-- EJEMPLO N° 2: EVITAR LA DUPLICACIÓN DE CORREOS ELECTRÓNICOS EN LA TABLA SOCIOS.ESTE TRIGGER SE ASEGURA DE QUE CADA CORREO ELECTRÓNICO EN LA TABLA SEA ÚNICO,ES DECIR, QUE NO HAYA DOS SOCIOS CON EL MISMO CORREO REGISTRADO. 
+
+DROP TRIGGER IF EXISTS evitar_duplicado_mail;
+
+DELIMITER //
+
+CREATE TRIGGER evitar_duplicado_mail
+BEFORE INSERT ON SOCIOS
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT 1 FROM SOCIOS WHERE MAIL = NEW.MAIL) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El correo electrónico ya está registrado en otro socio';
+    END IF;
+END //
+
+DELIMITER ;
+
+-- Se usará a modo de ejemplo la siguiente inserción de datos para verificar el trigger; 
+-- tomando de ejemplo el mail de la socia Valeria Moreno, cuyo mail es 'valeria19@example.com'.
+
+-- INSERT INTO SOCIOS (NOMBRE, APELLIDO, DNI, TELEFONO, MAIL, FECHA_ALTA)
+-- VALUES ('Valeria', 'Mendoza', 87654991, 22994455, 'valeria19@example.com', '2024-09-10 09:00:00');
+
+-- El mismo nos dará el error: 'El correo electrónico ya está registrado en otro socio'
+
+-- CREACIÓN DE ROLES Y ASIGNACIÓN DE USUARIOS
+-- SE PROCEDE A CREAR LOS USUARIOS:
+
+DROP USER IF EXISTS
+	'admin_user'@'localhost',
+	'reservas_manager'@'localhost',
+    'sedes_manager'@'localhost',
+    'profesores_manager'@'localhost',
+    'servicio_socio'@'localhost';
+    
+CREATE USER 'admin_user'@'localhost' IDENTIFIED BY 'password123';
+CREATE USER 'reservas_manager'@'localhost' IDENTIFIED BY 'password123';
+CREATE USER 'sedes_manager'@'localhost' IDENTIFIED BY 'password123';
+CREATE USER 'profesores_manager'@'localhost' IDENTIFIED BY 'password123';
+CREATE USER 'servicio_socio'@'localhost' IDENTIFIED BY 'password123';
+
+-- Y LUEGO,LOS ROLES:
+DROP ROLE IF EXISTS
+	'admin_role',
+	'gestor_reservas_role',
+	'gestor_sedes_role',
+	'gestor_profesores_role',
+	'socio_role';
+
+CREATE ROLE 'admin_role';
+CREATE ROLE 'gestor_reservas_role';
+CREATE ROLE 'gestor_sedes_role';
+CREATE ROLE 'gestor_profesores_role';
+CREATE ROLE 'socio_role';
+
+-- ASIGNACIÓN DE ROLES:
+-- Rol administrativo con permisos completos
+
+GRANT ALL PRIVILEGES ON *.* TO 'admin_role';
+
+
+-- Rol de gestor de reservas
+GRANT SELECT, INSERT, UPDATE, DELETE ON PROYECTO_RESERVAS.RESERVAS TO 'gestor_reservas_role';
+GRANT SELECT, UPDATE ON PROYECTO_RESERVAS.SOCIOS TO 'gestor_reservas_role';
+GRANT SELECT, UPDATE ON PROYECTO_RESERVAS.ACTIVIDADES TO 'gestor_reservas_role';
+
+
+-- Rol de gestor de sedes
+GRANT SELECT, INSERT, UPDATE, DELETE ON PROYECTO_RESERVAS.SEDE TO 'gestor_sedes_role';
+GRANT SELECT, INSERT, UPDATE, DELETE ON PROYECTO_RESERVAS.DUENO TO 'gestor_sedes_role';
+
+
+-- Rol de gestor de profesores
+GRANT SELECT, INSERT, UPDATE, DELETE ON PROYECTO_RESERVAS.PROFESORES TO 'gestor_profesores_role';
+GRANT SELECT ON PROYECTO_RESERVAS.ACTIVIDADES TO 'gestor_profesores_role';
+GRANT SELECT ON PROYECTO_RESERVAS.SEDE TO 'gestor_profesores_role';
+
+
+-- Rol de socio con permisos limitados
+GRANT SELECT, UPDATE ON PROYECTO_RESERVAS.SOCIOS TO 'socio_role';
+GRANT SELECT ON PROYECTO_RESERVAS.RESERVAS TO 'socio_role';
+GRANT SELECT ON PROYECTO_RESERVAS.ACTIVIDADES TO 'socio_role';
+
+
+-- ASIGNACIÓN DE ROLES A USUARIOS.
+
+GRANT 'admin_role' TO 'admin_user'@'localhost';
+GRANT 'gestor_reservas_role' TO 'reservas_manager'@'localhost';
+GRANT 'gestor_sedes_role' TO 'sedes_manager'@'localhost';
+GRANT 'gestor_profesores_role' TO 'profesores_manager'@'localhost';
+GRANT 'socio_role' TO 'servicio_socio'@'localhost';
+
+-- Una vez creados los roles, usarios y asignaciones, se activan los roles y se actualizan los privilegios con los siguientes comandos:
+
+-- Se  activarán los diferentes roles:
+SET ROLE ALL;
+
+-- Y luego, se actualizarán los privilegios en el servidor
+FLUSH PRIVILEGES;
+
+
+-- LENGUAJE DE CONTROL DE TRANSACCIONES (TCL):APLICADO A STORE PROCEDURES
+-- EJEMPLO N° 1:insertar_socio.
+
+START TRANSACTION;
+
+    -- Llamada al procedimiento almacenado para insertar un nuevo socio
+    CALL insertar_socio('Juliana', 'Dominguez', 45000995, 1234897893, 'julia.martinez25@example.com', '2024-09-15 10:00:00');
+    
+    COMMIT;
+
+-- SE BUSCARÁ EL SOCIO PARA VERIFICAR.
+-- SELECT * FROM SOCIOS WHERE DNI = 45000995;
+
+
+-- EJEMPLO N°2:actualizar_socio
+
+START TRANSACTION;
+    -- Llamada al procedimiento almacenado para actualizar la información de un socio (en este caso,el teléfono)
+    CALL actualizar_socio(31 ,'Juliana', 'Dominguez', 45000995, 1255897774, 'julia.martinez8@example.com', '2024-09-15 10:00:00');
+    COMMIT;
+    
+-- SE BUSCARÁ EL SOCIO PARA VERIFICAR.
+-- SELECT * FROM SOCIOS WHERE DNI = 45000995;
+
