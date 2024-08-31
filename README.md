@@ -226,53 +226,25 @@ Se  activarán los diferentes roles:
 
 
 Y luego, se actualizarán los privilegios en el servidor
-FLUSH PRIVILEGES;
+                          
+    --FLUSH PRIVILEGES;
 
 --- 
 **LENGUAJE DE CONTROL DE TRANSACCIONES (TCL):APLICADO A STORE PROCEDURES.**
 
 EJEMPLO N° 1:insertar_socio.
 
-DESCRIPCIÓN: ASEGURA QUE LA INSERCIÓN DE UN NUEVO SOCIO EN LA TABLA SOCIOS SE REALICE CORRECTAMENTE Y QUE,EN CASO DE ERROR, LA TRANSACCIÓN SE REVIERTA PARA MANTENER LA INTEGRIDAD DE LOS DATOS.
+DESCRIPCIÓN: ASEGURA QUE LA INSERCIÓN DE UN NUEVO SOCIO EN LA TABLA SOCIOS SE REALICE CORRECTAMENTE.
 
-START TRANSACTION;
-
-BEGIN
-    -- Llamada al procedimiento almacenado para insertar un nuevo socio
-    CALL insertar_socio('Julia', 'Martínez', 45000994, 1234897893, 'julia.martinez8@example.com', '2024-09-15 10:00:00');
-    
-    -- Supongamos que quieres realizar otra operación que depende de esta inserción
-    -- (por ejemplo, insertar una reserva, si existiera una función de reserva).
-
-    -- Si todo se ejecuta correctamente, confirmamos la transacción
-    COMMIT;
-
-EXCEPTION
-    -- Si ocurre algún error, revertimos la transacción
-    ROLLBACK;
-END;
+![image](https://github.com/user-attachments/assets/b1536e96-46c1-4fe3-9595-081e1b76ea4b)
 
 
 EJEMPLO N°2:actualizar_socio
 
-DESCRIPCIÓN:ASEGURA QUE LA ACTUALIZACIÓN DE LA INFORMACIÓN DE UN SOCIO EN LA TABLA SOCIOS SE REALICE CORRECTAMENTE,Y EN CASO DE ERROR, LA TRANSACCIÓN SE REVIERTA.
+DESCRIPCIÓN:ASEGURA QUE LA ACTUALIZACIÓN DE LA INFORMACIÓN DE UN SOCIO EN LA TABLA SOCIOS SE REALICE CORRECTAMENTE.
 
+![image](https://github.com/user-attachments/assets/27e287b9-9b78-433a-911a-4ca05840ff4a)
 
-
-START TRANSACTION;
-
-BEGIN
-    -- Llamada al procedimiento almacenado para actualizar la información de un socio (en este caso,el teléfono)
-    
-    CALL actualizar_socio('Julia', 'Martínez', 45000994, 1234897894, 'julia.martinez8@example.com', '2024-09-15 10:00:00');
-  
-    -- Si todo se ejecuta correctamente, confirmamos la transacción
-    COMMIT;
-
-EXCEPTION
-    -- Si ocurre algún error, revertimos la transacción
-    ROLLBACK;
-END;
 
 ---
 **BACKUP**
