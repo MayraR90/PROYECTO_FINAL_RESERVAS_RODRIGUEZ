@@ -249,5 +249,11 @@ DESCRIPCIÓN:ASEGURA QUE LA ACTUALIZACIÓN DE LA INFORMACIÓN DE UN SOCIO EN LA 
 ---
 **BACKUP**
 
+![image](https://github.com/user-attachments/assets/64181c00-3ca5-4583-b520-949848a1c783)
+
+![image](https://github.com/user-attachments/assets/03096364-113c-4ac0-97b7-d69c06dec3e6)
+
+![image](https://github.com/user-attachments/assets/d28aed15-f8b2-4bf8-a1a9-577d99bc476e)
+
 
 
